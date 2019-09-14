@@ -297,6 +297,292 @@ def switchPlay():
     else:
         print('ERROR')
 
+def switchPiece(baris,kolom):
+    global board
+    if(board[baris][kolom] == 'x'):
+        board[baris][kolom] = 'o'
+    elif(board[baris][kolom] == 'o'):
+        board[baris][kolom] = 'x'
+
+def makanPiece(koordinat):
+    global playTurn
+    koordinatJalan = koordinat.split(",")
+    if(playTurn == 'o'):
+        # Cek ke atas
+
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke atas
+        if(board[indeksBaris-1][indeksKolom] == 'x'):
+            while(indeksBaris > 0):
+                if(board[indeksBaris-1][indeksKolom] == 'o'):
+                    # Ketemu temen
+                    while indeksBaris < int(koordinatJalan[0]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris + 1
+                    break
+                else:
+                    indeksBaris = indeksBaris - 1
+
+        # Cek ke kanan atas
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kanan atas
+        if(board[indeksBaris-1][indeksKolom+1] == 'x'):
+            while(indeksBaris > 0 and indeksKolom < 9):
+                if(board[indeksBaris-1][indeksKolom+1] == 'o'):
+                    # Ketemu temen
+                    while indeksBaris < int(koordinatJalan[0]) and indeksKolom > int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,indeksKolom)
+                        indeksBaris = indeksBaris + 1
+                        indeksKolom = indeksKolom - 1
+                    break
+                else:
+                    indeksBaris = indeksBaris - 1
+                    indeksKolom = indeksKolom + 1
+
+        # Cek ke kanan
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kanan
+        if(board[indeksBaris][indeksKolom+1] == 'x'):
+            while(indeksKolom < 9):
+                if(board[indeksBaris][indeksKolom+1] == 'o'):
+                    # Ketemu temen
+                    while indeksKolom > int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,indeksKolom)
+                        indeksKolom = indeksKolom - 1
+                    break
+                else:
+                    indeksKolom = indeksKolom + 1
+
+        # Cek ke kanan bawah
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kanan bawah
+        if(board[indeksBaris+1][indeksKolom+1] == 'x'):
+            while(indeksBaris < 9 and indeksKolom < 9):
+                if(board[indeksBaris+1][indeksKolom+1] == 'o'):
+                    # Ketemu temen
+                    while indeksBaris > int(koordinatJalan[0]) and indeksKolom > int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris - 1
+                        indeksKolom = indeksKolom - 1
+                    break
+                else:
+                    indeksKolom = indeksKolom + 1
+                    indeksBaris = indeksBaris + 1
+
+        # Cek ke bawah
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke bawah
+        if(board[indeksBaris+1][indeksKolom] == 'x'):
+            while(indeksBaris < 9):
+                if(board[indeksBaris+1][indeksKolom] == 'o'):
+                    # Ketemu temen
+                    while indeksBaris > int(koordinatJalan[0]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris - 1
+                    break
+                else:
+                    indeksBaris = indeksBaris + 1
+
+        # Cek ke kiri bawah
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kiri bawah
+        if(board[indeksBaris+1][indeksKolom-1] == 'x'):
+            while(indeksBaris < 9 and indeksKolom > 0):
+                if(board[indeksBaris+1][indeksKolom-1] == 'o'):
+                    # Ketemu temen
+                    while indeksBaris > int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris - 1
+                        indeksKolom = indeksKolom + 1
+                    break
+                else:
+                    indeksBaris = indeksBaris + 1
+                    indeksKolom = indeksKolom - 1
+
+        # Cek ke kiri
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kiri
+        if(board[indeksBaris][indeksKolom-1] == 'x'):
+            while(indeksKolom > 0):
+                if(board[indeksBaris][indeksKolom-1] == 'o'):
+                    # Ketemu temen
+                    while indeksKolom < int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksKolom = indeksKolom + 1
+                    break
+                else:
+                    indeksKolom = indeksKolom - 1
+
+        # Cek ke kiri atas
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kiri atas
+        if(board[indeksBaris-1][indeksKolom-1] == 'x'):
+            while(indeksBaris > 0 and indeksKolom > 0):
+                if(board[indeksBaris-1][indeksKolom-1] == 'o'):
+                    # Ketemu temen
+                    while indeksBaris < int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris + 1
+                        indeksKolom = indeksKolom + 1
+                    break
+                else:
+                    indeksKolom = indeksKolom - 1
+                    indeksBaris = indeksBaris - 1
+                
+    elif(playTurn == 'x'):
+        # Cek ke atas
+
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke atas
+        if(board[indeksBaris-1][indeksKolom] == 'o'):
+            while(indeksBaris > 0):
+                if(board[indeksBaris-1][indeksKolom] == 'x'):
+                    # Ketemu temen
+                    while indeksBaris < int(koordinatJalan[0]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris + 1
+                    break
+                else:
+                    indeksBaris = indeksBaris - 1
+
+        # Cek ke kanan atas
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kanan atas
+        if(board[indeksBaris-1][indeksKolom+1] == 'o'):
+            while(indeksBaris > 0 and indeksKolom < 9):
+                if(board[indeksBaris-1][indeksKolom+1] == 'x'):
+                    # Ketemu temen
+                    while indeksBaris < int(koordinatJalan[0]) and indeksKolom > int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,indeksKolom)
+                        indeksBaris = indeksBaris + 1
+                        indeksKolom = indeksKolom - 1
+                    break
+                else:
+                    indeksBaris = indeksBaris - 1
+                    indeksKolom = indeksKolom + 1
+
+        # Cek ke kanan
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kanan
+        if(board[indeksBaris][indeksKolom+1] == 'o'):
+            while(indeksKolom < 9):
+                if(board[indeksBaris][indeksKolom+1] == 'x'):
+                    # Ketemu temen
+                    while indeksKolom > int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,indeksKolom)
+                        indeksKolom = indeksKolom - 1
+                    break
+                else:
+                    indeksKolom = indeksKolom + 1
+
+        # Cek ke kanan bawah
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kanan bawah
+        if(board[indeksBaris+1][indeksKolom+1] == 'o'):
+            while(indeksBaris < 9 and indeksKolom < 9):
+                if(board[indeksBaris+1][indeksKolom+1] == 'x'):
+                    # Ketemu temen
+                    while indeksBaris > int(koordinatJalan[0]) and indeksKolom > int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris - 1
+                        indeksKolom = indeksKolom - 1
+                    break
+                else:
+                    indeksKolom = indeksKolom + 1
+                    indeksBaris = indeksBaris + 1
+
+        # Cek ke bawah
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke bawah
+        if(board[indeksBaris+1][indeksKolom] == 'o'):
+            while(indeksBaris < 9):
+                if(board[indeksBaris+1][indeksKolom] == 'x'):
+                    # Ketemu temen
+                    while indeksBaris > int(koordinatJalan[0]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris - 1
+                    break
+                else:
+                    indeksBaris = indeksBaris + 1
+
+        # Cek ke kiri bawah
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kiri bawah
+        if(board[indeksBaris+1][indeksKolom-1] == 'o'):
+            while(indeksBaris < 9 and indeksKolom > 0):
+                if(board[indeksBaris+1][indeksKolom-1] == 'x'):
+                    # Ketemu temen
+                    while indeksBaris > int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris - 1
+                        indeksKolom = indeksKolom + 1
+                    break
+                else:
+                    indeksBaris = indeksBaris + 1
+                    indeksKolom = indeksKolom - 1
+
+        # Cek ke kiri
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kiri
+        if(board[indeksBaris][indeksKolom-1] == 'o'):
+            while(indeksKolom > 0):
+                if(board[indeksBaris][indeksKolom-1] == 'x'):
+                    # Ketemu temen
+                    while indeksKolom < int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksKolom = indeksKolom + 1
+                    break
+                else:
+                    indeksKolom = indeksKolom - 1
+
+        # Cek ke kiri atas
+        indeksBaris = int(koordinatJalan[0])
+        indeksKolom = int(koordinatJalan[1])
+        
+        # Cek apakah harus di cek ke kiri atas
+        if(board[indeksBaris-1][indeksKolom-1] == 'o'):
+            while(indeksBaris > 0 and indeksKolom > 0):
+                if(board[indeksBaris-1][indeksKolom-1] == 'x'):
+                    # Ketemu temen
+                    while indeksBaris < int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
+                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        indeksBaris = indeksBaris + 1
+                        indeksKolom = indeksKolom + 1
+                    break
+                else:
+                    indeksKolom = indeksKolom - 1
+                    indeksBaris = indeksBaris - 1
+        
     
 
 arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
@@ -307,13 +593,14 @@ playTurn = 'o'
 
 # MAIN
 
-print("GAME BEGINS!")
+print("GAME BEGINS! Input your command by using 'row,column' of the grid you want to play")
 while not gameEnd:
     showBoard(board)
     print("It's your turn player "+playTurn+", which grid you want to play?")
     koordinat = input("")
     jalan(koordinat)
     updateArrayLegalMove(koordinat)
+    makanPiece(koordinat)
     switchPlay()
 
     # For checking purpose only. Delete if the project is finished.
