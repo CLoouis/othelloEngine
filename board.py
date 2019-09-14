@@ -1,30 +1,19 @@
-board = [[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']]
+board = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
 
 def showBoard(board):
-    """Show othello board based on board parameter"""
-    print('    0   1   2   3   4   5   6   7')
+    """Menampilkan papan permainan saat ini"""
+    print('    1   2   3   4   5   6   7   8')
     batas = '\n  ' + '+---'*8 + '+\n'
     ful = batas     
-    for i in range(8) :
+    for i in range(1, 9) :
         sebaris = str(i) + " | "
-        for j in range(8) :
+        for j in range(1, 9) :
             sebaris += board[i][j] + ' | '
         ful += sebaris + batas
     print(ful)
 
-board[3][3] = 'o'
-board[3][4] = 'x'
-board[4][3] = 'x'
 board[4][4] = 'o'
-# showBoard(board)
+board[4][5] = 'x'
+board[5][4] = 'x'
+board[5][5] = 'o'
 
-# def main():
-#     while (True):
-#         baris = int(input("Silahkan pilih baris : "))
-#         kolom = int(input("Silahkan pilih kolom : "))
-
-#         board[baris][kolom] = 'o'
-
-#         showBoard(board)
-
-# main()
