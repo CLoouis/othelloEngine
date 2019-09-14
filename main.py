@@ -1,8 +1,7 @@
 from board import *
 from eval import *
 
-showBoard(board)
-
+# 
 def balikPiece(baris,kolom):
     # Untuk membalik piece pada sebuah kotak
     global board
@@ -13,3 +12,17 @@ def balikPiece(baris,kolom):
     else:
         # ERROR
         print("Blok Kosong!!!")
+
+global arrayLegalMovesO, arrayLegalMovesX
+arrayLegalMovesO = []
+arrayLegalMovesX = []
+
+gameEnd = 0
+playTurn = 'o'
+
+# MAIN
+print("GAME BEGINS!")
+while not gameEnd:
+    showBoard(board)
+    print("It's your turn player",playTurn)
+    command = input("")
