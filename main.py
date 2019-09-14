@@ -1,3 +1,8 @@
+from board import *
+from eval import *
+
+showBoard(board)
+
 def balikPiece(baris,kolom):
     # Untuk membalik piece pada sebuah kotak
     global board
