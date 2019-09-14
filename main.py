@@ -39,10 +39,6 @@ def jalan(posisi):
         playTurn = 'o'
     
 
-global arrayLegalMovesO, arrayLegalMovesX,playTurn
-arrayLegalMovesO = [(4,2),(5,3),(2,4),(3,5)]
-arrayLegalMovesX = [(3,2),(2,3),(5,4),(4,5)]
-
 gameEnd = 0
 playTurn = 'o'
 
