@@ -17,6 +17,7 @@ def evalCoinParityEvaluation(playTurn, board):
     return numberOfPlayTurnPiece - numberOfEnemiesPiece
 
 
+
 def mobilityEvaluation(playTurn, legalO, legalX):
     """Menghitung perbandingan banyaknya kemungkinan jalan dari turn pemain
     saat ini dan turn pemain berikutnya"""
