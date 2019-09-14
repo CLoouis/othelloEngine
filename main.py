@@ -13,7 +13,17 @@ def balikPiece(baris,kolom):
         # ERROR
         print("Blok Kosong!!!")
 
-global arrayLegalMovesO, arrayLegalMovesX
+def jalan(posisi):
+    global board,playTurn
+    koordinatJalan = posisi.split(",")
+    board[int(koordinatJalan[0])][int(koordinatJalan[1])] = playTurn
+    if(playTurn == 'o'):
+        playTurn = 'x'
+    elif(playTurn =='x'):
+        playTurn = 'o'
+    
+
+global arrayLegalMovesO, arrayLegalMovesX,playTurn
 arrayLegalMovesO = []
 arrayLegalMovesX = []
 
@@ -24,5 +34,6 @@ playTurn = 'o'
 print("GAME BEGINS!")
 while not gameEnd:
     showBoard(board)
-    print("It's your turn player",playTurn)
+    print("It's your turn player "+playTurn+", which grid you want to play?")
     command = input("")
+    jalan(command)
