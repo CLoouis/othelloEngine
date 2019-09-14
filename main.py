@@ -270,39 +270,23 @@ def isGridLegal(playTurn,baris,kolom):
 def addArrayLegal(playTurn,baris,kolom):
     global arrayLegalMovesO,arrayLegalMovesX
     if playTurn=='o':
-        arrayLegalMovesX.append((int(baris),int(kolom)))
+        if((int(baris),int(kolom)) not in arrayLegalMovesX):
+            arrayLegalMovesX.append((int(baris),int(kolom)))
     elif playTurn=='x':
-        arrayLegalMovesO.append((int(baris),int(kolom)))
+        if((int(baris),int(kolom)) not in arrayLegalMovesO):
+            arrayLegalMovesO.append((int(baris),int(kolom)))
     else :
         print('Error')
 
-def updateArrayLegalMove(playTurn,koordinat):
+def updateArrayLegalMove(koordinat):
+    global playTurn
     # Lakukan pengecekan pada grid di sekitar koordinat input
     koordinatJalan = koordinat.split(",")
-    # Kiri atas
-    if isGridLegal(playTurn,int(koordinatJalan[0])-1, int(koordinatJalan[1])-1):
-        addArrayLegal(playTurn, int(koordinatJalan[0])-1, int(koordinatJalan[1])-1)
-    # Tengah atas
-    if isGridLegal(playTurn,int(koordinatJalan[0])-1, int(koordinatJalan[1])):
-        addArrayLegal(playTurn, int(koordinatJalan[0])-1, int(koordinatJalan[1]))
-    # Kanan atas
-    if isGridLegal(playTurn,int(koordinatJalan[0])-1, int(koordinatJalan[1])+1):
-        addArrayLegal(playTurn, int(koordinatJalan[0])-1, int(koordinatJalan[1])+1)
-    # Kiri
-    if isGridLegal(playTurn,int(koordinatJalan[0]), int(koordinatJalan[1])-1):
-        addArrayLegal(playTurn, int(koordinatJalan[0]), int(koordinatJalan[1])-1)
-    # Kanan
-    if isGridLegal(playTurn,int(koordinatJalan[0]), int(koordinatJalan[1])+1):
-        addArrayLegal(playTurn, int(koordinatJalan[0]), int(koordinatJalan[1])+1)
-    # Kiri bawah
-    if isGridLegal(playTurn,int(koordinatJalan[0])+1, int(koordinatJalan[1])-1):
-        addArrayLegal(playTurn, int(koordinatJalan[0])+1, int(koordinatJalan[1])-1)
-    # Tengah bawah
-    if isGridLegal(playTurn,int(koordinatJalan[0])+1, int(koordinatJalan[1])):
-        addArrayLegal(playTurn, int(koordinatJalan[0])+1, int(koordinatJalan[1]))
-    # Kanan bawah
-    if isGridLegal(playTurn,int(koordinatJalan[0])+1, int(koordinatJalan[1])+1):
-        addArrayLegal(playTurn, int(koordinatJalan[0])+1, int(koordinatJalan[1])+1)
+    for i in range(1,9):
+        for j in range(1,9):
+            if isGridLegal(playTurn,i,j):
+                addArrayLegal(playTurn, i, j)
+
 
 def switchPlay():
     global playTurn
@@ -329,7 +313,7 @@ while not gameEnd:
     print("It's your turn player "+playTurn+", which grid you want to play?")
     koordinat = input("")
     jalan(koordinat)
-    updateArrayLegalMove(playTurn,koordinat)
+    updateArrayLegalMove(koordinat)
     switchPlay()
 
     # For checking purpose only. Delete if the project is finished.
