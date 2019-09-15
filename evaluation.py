@@ -60,16 +60,6 @@ def evalState(playTurn, board):
     """Mengembalikan nilai evaluasi dari sebuah susunan papan (board)
     pada sebuah giliran tertentu"""
 
+    global arrayLegalMovesO, arrayLegalMovesX
     return  evalCoinParityEvaluation(playTurn, board) + mobilityEvaluation(playTurn, arrayLegalMovesO, arrayLegalMovesX) + stabilityEvaluation(playTurn, board)
 
-
-board[2][4] = 'o'
-board[3][4] = 'o'
-# board[4][6] = 'x'
-
-showBoard(board)
-print(evalCoinParityEvaluation('o', board))
-print(mobilityEvaluation('o', arrayLegalMovesO, arrayLegalMovesX))
-print(stabilityEvaluation('o', board))
-print(evalState('o', board))
-print(evalState('x', board))

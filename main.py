@@ -1,35 +1,20 @@
 from board import *
-from eval import *
+from evaluation import *
 
-global arrayLegalMovesO, arrayLegalMovesX,playTurn,koordinat
+# global arrayLegalMovesO, arrayLegalMovesX, playTurn, koordinat
 
-def balikPiece(baris,kolom):
-    # Untuk membalik piece pada sebuah kotak
-    global board
-    if board[baris][kolom] == 'o':
-        board[baris][kolom] = 'x'
-    elif board[baris][kolom] == 'x':
-        board[baris][kolom] = 'o'
-    else:
-        # ERROR
-        print("Blok Kosong!!!")
-
-def isGridKosong(baris,kolom):
-    global board
-    return (board[baris][kolom] == ' ')
-
-def isJalanLegal(giliran,baris,kolom):
+def isJalanLegal(baris,kolom):
     global arrayLegalMovesO,arrayLegalMovesX,playTurn
     tupleKoordinatJalan = (int(baris),int(kolom))
-    if(giliran == 'o'):
+    if(playTurn == 'o'):
         return (tupleKoordinatJalan in arrayLegalMovesO)
-    elif(giliran == 'x'):
+    elif(playTurn == 'x'):
         return (tupleKoordinatJalan in arrayLegalMovesX)
     else:
         return False
 
-def removeKoordinatDariArrayLegal(giliran,baris,kolom):
-    global arrayLegalMovesO,arrayLegalMovesX,playTurn
+def removeKoordinatDariArrayLegal(baris,kolom):
+    global arrayLegalMovesO,arrayLegalMovesX
     tupleKoordinatJalan = (int(baris),int(kolom))
     if(tupleKoordinatJalan in arrayLegalMovesO):
         arrayLegalMovesO.remove(tupleKoordinatJalan)
@@ -39,10 +24,10 @@ def removeKoordinatDariArrayLegal(giliran,baris,kolom):
 def jalan(posisi):
     global board,playTurn,koordinat
     koordinatJalan = posisi.split(",")
-    if(isJalanLegal(playTurn,koordinatJalan[0],koordinatJalan[1])):
+    if(isJalanLegal(koordinatJalan[0],koordinatJalan[1])):
         board[int(koordinatJalan[0])][int(koordinatJalan[1])] = playTurn
         # Remove koordinatJalan dari arrayLegalMoves
-        removeKoordinatDariArrayLegal(playTurn,int(koordinatJalan[0]),int(koordinatJalan[1]))
+        removeKoordinatDariArrayLegal(int(koordinatJalan[0]),int(koordinatJalan[1]))
     else:
         # Koordinat tidak legal
         print("I'm sorry, but that move is invalid my friend. Please input another one. Which grid you want to play?")
@@ -278,14 +263,16 @@ def addArrayLegal(playTurn,baris,kolom):
     else :
         print('Error')
 
-def updateArrayLegalMove(koordinat):
-    global playTurn
-    # Lakukan pengecekan pada grid di sekitar koordinat input
-    koordinatJalan = koordinat.split(",")
+def updateArrayLegalMove():
+    global playTurn,arrayLegalMovesO,arrayLegalMovesX
+    arrayLegalMovesO = []
+    arrayLegalMovesX = []
     for i in range(1,9):
         for j in range(1,9):
-            if isGridLegal(playTurn,i,j):
-                addArrayLegal(playTurn, i, j)
+            if isGridLegal('o',i,j):
+                addArrayLegal('o',i,j)
+            if isGridLegal('x',i,j):
+                addArrayLegal('x',i,j)
 
 
 def switchPlay():
@@ -369,7 +356,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris+1][indeksKolom+1] == 'o'):
                     # Ketemu temen
                     while indeksBaris > int(koordinatJalan[0]) and indeksKolom > int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris, indeksKolom)
                         indeksBaris = indeksBaris - 1
                         indeksKolom = indeksKolom - 1
                     break
@@ -387,7 +374,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris+1][indeksKolom] == 'o'):
                     # Ketemu temen
                     while indeksBaris > int(koordinatJalan[0]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris - 1
                     break
                 else:
@@ -403,7 +390,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris+1][indeksKolom-1] == 'o'):
                     # Ketemu temen
                     while indeksBaris > int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris - 1
                         indeksKolom = indeksKolom + 1
                     break
@@ -421,7 +408,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris][indeksKolom-1] == 'o'):
                     # Ketemu temen
                     while indeksKolom < int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksKolom = indeksKolom + 1
                     break
                 else:
@@ -437,7 +424,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris-1][indeksKolom-1] == 'o'):
                     # Ketemu temen
                     while indeksBaris < int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris + 1
                         indeksKolom = indeksKolom + 1
                     break
@@ -457,7 +444,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris-1][indeksKolom] == 'x'):
                     # Ketemu temen
                     while indeksBaris < int(koordinatJalan[0]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris + 1
                     break
                 else:
@@ -507,7 +494,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris+1][indeksKolom+1] == 'x'):
                     # Ketemu temen
                     while indeksBaris > int(koordinatJalan[0]) and indeksKolom > int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris - 1
                         indeksKolom = indeksKolom - 1
                     break
@@ -525,7 +512,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris+1][indeksKolom] == 'x'):
                     # Ketemu temen
                     while indeksBaris > int(koordinatJalan[0]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris - 1
                     break
                 else:
@@ -541,7 +528,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris+1][indeksKolom-1] == 'x'):
                     # Ketemu temen
                     while indeksBaris > int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris - 1
                         indeksKolom = indeksKolom + 1
                     break
@@ -559,7 +546,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris][indeksKolom-1] == 'x'):
                     # Ketemu temen
                     while indeksKolom < int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksKolom = indeksKolom + 1
                     break
                 else:
@@ -575,7 +562,7 @@ def makanPiece(koordinat):
                 if(board[indeksBaris-1][indeksKolom-1] == 'x'):
                     # Ketemu temen
                     while indeksBaris < int(koordinatJalan[0]) and indeksKolom < int(koordinatJalan[1]):
-                        switchPiece(indeksBaris,int(koordinatJalan[1]))
+                        switchPiece(indeksBaris,indeksKolom)
                         indeksBaris = indeksBaris + 1
                         indeksKolom = indeksKolom + 1
                     break
@@ -584,22 +571,48 @@ def makanPiece(koordinat):
                     indeksBaris = indeksBaris - 1
         
     
-gameEnd = 0
-playTurn = 'o'
+def cekGameEnd():
+    global arrayLegalMovesO, arrayLegalMovesX
+    # Tidak ada yang bisa jalan
+    return (arrayLegalMovesO == [] and arrayLegalMovesX == [])
+
+# arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
+# arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
+
+# gameEnd = 0
+# playTurn = 'o'
 
 # MAIN
 
 print("GAME BEGINS! Input your command by using 'row,column' of the grid you want to play")
+# For checking purpose only. Delete if the project is finished.
+print('arrayLegalMovesO : ',arrayLegalMovesO)
+print('arrayLegalMovesX : ',arrayLegalMovesX)
 while not gameEnd:
-    showBoard(board)
-    print("It's your turn player "+playTurn+", which grid you want to play?")
-    koordinat = input("")
-    jalan(koordinat)
-    updateArrayLegalMove(koordinat)
-    makanPiece(koordinat)
+    showBoard()
+    if(playTurn == 'o'):
+        if(arrayLegalMovesO):
+            print("It's your turn player "+playTurn+", which grid you want to play?")
+            koordinat = input("")
+            jalan(koordinat)
+            makanPiece(koordinat)
+            updateArrayLegalMove()
+        else:
+            print("Sorry my friend, there is no legal move for you this turn")
+    elif(playTurn == 'x'):
+        if(arrayLegalMovesX):
+            print("It's your turn player "+playTurn+", which grid you want to play?")
+            koordinat = input("")
+            jalan(koordinat)
+            makanPiece(koordinat)
+            updateArrayLegalMove()
+        else:
+            print("Sorry my friend, there is no legal move for you this turn")
+    
+    cekGameEnd()
+    print("eval state " + playTurn + " = " + str(evalState(playTurn, board)))
     switchPlay()
 
     # For checking purpose only. Delete if the project is finished.
     print('arrayLegalMovesO : ',arrayLegalMovesO)
     print('arrayLegalMovesX : ',arrayLegalMovesX)
-    
