@@ -586,6 +586,10 @@ def makanPiece(koordinat):
                     indeksBaris = indeksBaris - 1
         
     
+def cekGameEnd():
+    global arrayLegalMovesO, arrayLegalMovesX
+    # Tidak ada yang bisa jalan
+    return (arrayLegalMovesO == [] and arrayLegalMovesX == [])
 
 arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
 arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
@@ -601,11 +605,26 @@ print('arrayLegalMovesO : ',arrayLegalMovesO)
 print('arrayLegalMovesX : ',arrayLegalMovesX)
 while not gameEnd:
     showBoard(board)
-    print("It's your turn player "+playTurn+", which grid you want to play?")
-    koordinat = input("")
-    jalan(koordinat)
-    makanPiece(koordinat)
-    updateArrayLegalMove()
+    if(playTurn == 'o'):
+        if(arrayLegalMovesO):
+            print("It's your turn player "+playTurn+", which grid you want to play?")
+            koordinat = input("")
+            jalan(koordinat)
+            makanPiece(koordinat)
+            updateArrayLegalMove()
+        else:
+            print("Sorry my friend, there is no legal move for you this turn")
+    elif(playTurn == 'x'):
+        if(arrayLegalMovesX):
+            print("It's your turn player "+playTurn+", which grid you want to play?")
+            koordinat = input("")
+            jalan(koordinat)
+            makanPiece(koordinat)
+            updateArrayLegalMove()
+        else:
+            print("Sorry my friend, there is no legal move for you this turn")
+    
+    cekGameEnd()
     switchPlay()
 
     # For checking purpose only. Delete if the project is finished.
