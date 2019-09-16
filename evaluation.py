@@ -1,5 +1,3 @@
-from board import *
-
 def evalCoinParityEvaluation(playTurn, board):
     """Menghitung perbandingan banyaknya piece milik sendiri 
     dibanding dengan milik musuh"""
@@ -18,14 +16,14 @@ def evalCoinParityEvaluation(playTurn, board):
 
 
 
-def mobilityEvaluation(playTurn, legalO, legalX):
+def mobilityEvaluation(playTurn, arrayLegalMovesO, arrayLegalMovesX):
     """Menghitung perbandingan banyaknya kemungkinan jalan dari turn pemain
     saat ini dan turn pemain berikutnya"""
 
     if (playTurn == 'o'):
-        return len(legalO) - len(legalX)
+        return len(arrayLegalMovesO) - len(arrayLegalMovesX)
     else :
-        return len(legalX) - len(legalO)
+        return len(arrayLegalMovesX) - len(arrayLegalMovesO)
 
 
 WeightHeuristicBoard = [
@@ -56,10 +54,9 @@ def stabilityEvaluation(playTurn, board):
     
     return nilaiStabilityPlayer - nilaiStabilityEnemy
 
-def evalState(playTurn, board):
+def evalState(playTurn, board, arrayLegalMovesO, arrayLegalMovesX):
     """Mengembalikan nilai evaluasi dari sebuah susunan papan (board)
     pada sebuah giliran tertentu"""
 
-    global arrayLegalMovesO, arrayLegalMovesX
     return  evalCoinParityEvaluation(playTurn, board) + mobilityEvaluation(playTurn, arrayLegalMovesO, arrayLegalMovesX) + stabilityEvaluation(playTurn, board)
 
