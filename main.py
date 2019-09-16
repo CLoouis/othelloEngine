@@ -69,6 +69,8 @@ def isGridLegal(playTurn,baris,kolom):
                     if(board[indeksBaris-1][indeksKolom] == 'o'):
                         # Ketemu temen
                         return True
+                    elif(board[indeksBaris-1][indeksKolom] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris - 1
 
@@ -81,6 +83,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris > 0 and indeksKolom < 9):
                     if(board[indeksBaris-1][indeksKolom+1] == 'o'):
                         return True
+                    elif(board[indeksBaris-1][indeksKolom+1] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris - 1
                         indeksKolom = indeksKolom + 1
@@ -94,6 +98,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksKolom < 9):
                     if(board[indeksBaris][indeksKolom+1] == 'o'):
                         return True
+                    elif(board[indeksBaris][indeksKolom+1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom + 1
 
@@ -106,6 +112,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris < 9 and indeksKolom < 9):
                     if(board[indeksBaris+1][indeksKolom+1] == 'o'):
                         return True
+                    elif(board[indeksBaris+1][indeksKolom+1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom + 1
                         indeksBaris = indeksBaris + 1
@@ -119,6 +127,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris < 9):
                     if(board[indeksBaris+1][indeksKolom] == 'o'):
                         return True
+                    elif(board[indeksBaris+1][indeksKolom] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris + 1
 
@@ -131,6 +141,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris < 9 and indeksKolom > 0):
                     if(board[indeksBaris+1][indeksKolom-1] == 'o'):
                         return True
+                    elif(board[indeksBaris+1][indeksKolom-1] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris + 1
                         indeksKolom = indeksKolom - 1
@@ -144,6 +156,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksKolom > 0):
                     if(board[indeksBaris][indeksKolom-1] == 'o'):
                         return True
+                    elif(board[indeksBaris][indeksKolom-1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom - 1
 
@@ -156,6 +170,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris > 0 and indeksKolom > 0):
                     if(board[indeksBaris-1][indeksKolom-1] == 'o'):
                         return True
+                    elif(board[indeksBaris-1][indeksKolom-1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom - 1
                         indeksBaris = indeksBaris - 1
@@ -173,6 +189,8 @@ def isGridLegal(playTurn,baris,kolom):
                     if(board[indeksBaris-1][indeksKolom] == 'x'):
                         # Ketemu temen
                         return True
+                    elif(board[indeksBaris-1][indeksKolom] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris - 1
 
@@ -185,6 +203,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris > 0 and indeksKolom < 9):
                     if(board[indeksBaris-1][indeksKolom+1] == 'x'):
                         return True
+                    elif(board[indeksBaris-1][indeksKolom+1] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris - 1
                         indeksKolom = indeksKolom + 1
@@ -198,6 +218,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksKolom < 9):
                     if(board[indeksBaris][indeksKolom+1] == 'x'):
                         return True
+                    elif(board[indeksBaris][indeksKolom+1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom + 1
 
@@ -210,6 +232,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris < 9 and indeksKolom < 9):
                     if(board[indeksBaris+1][indeksKolom+1] == 'x'):
                         return True
+                    elif(board[indeksBaris+1][indeksKolom+1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom + 1
                         indeksBaris = indeksBaris + 1
@@ -223,6 +247,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris < 9):
                     if(board[indeksBaris+1][indeksKolom] == 'x'):
                         return True
+                    elif(board[indeksBaris+1][indeksKolom] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris + 1
 
@@ -235,6 +261,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris < 9 and indeksKolom > 0):
                     if(board[indeksBaris+1][indeksKolom-1] == 'x'):
                         return True
+                    elif(board[indeksBaris+1][indeksKolom-1] == ' '):
+                        break
                     else:
                         indeksBaris = indeksBaris + 1
                         indeksKolom = indeksKolom - 1
@@ -248,6 +276,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksKolom > 0):
                     if(board[indeksBaris][indeksKolom-1] == 'x'):
                         return True
+                    elif(board[indeksBaris][indeksKolom-1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom - 1
 
@@ -260,6 +290,8 @@ def isGridLegal(playTurn,baris,kolom):
                 while(indeksBaris > 0 and indeksKolom > 0):
                     if(board[indeksBaris-1][indeksKolom-1] == 'x'):
                         return True
+                    elif(board[indeksBaris-1][indeksKolom-1] == ' '):
+                        break
                     else:
                         indeksKolom = indeksKolom - 1
                         indeksBaris = indeksBaris - 1
@@ -594,7 +626,7 @@ def cekGameEnd():
 arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
 arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
 
-gameEnd = 0
+gameEnd = False
 playTurn = 'o'
 
 # MAIN
@@ -624,7 +656,7 @@ while not gameEnd:
         else:
             print("Sorry my friend, there is no legal move for you this turn")
     
-    cekGameEnd()
+    gameEnd = cekGameEnd()
     switchPlay()
 
     # For checking purpose only. Delete if the project is finished.
