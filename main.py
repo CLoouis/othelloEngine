@@ -13,7 +13,7 @@ board[5][5] = 'o'
 global arrayLegalMovesO, arrayLegalMovesX, playTurn, koordinat
 arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
 arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
-gameEnd = 0
+gameEnd = False
 playTurn = 'o'
 
 # MAIN
@@ -24,13 +24,12 @@ print('arrayLegalMovesO : ',arrayLegalMovesO)
 print('arrayLegalMovesX : ',arrayLegalMovesX)
 while not gameEnd:
     showBoard(board)
-    countScore(board)
+    showScore(board)
     if(playTurn == 'o'):
         if(arrayLegalMovesO):
             print("It's your turn player "+playTurn+", which grid you want to play?")
             koordinat = input("")
             jalan(board, koordinat, playTurn, arrayLegalMovesO, arrayLegalMovesX)
-            makanPiece(board, playTurn, koordinat)
             updateArrayLegalMove(board, arrayLegalMovesO, arrayLegalMovesX)
         else:
             print("Sorry my friend, there is no legal move for you this turn")
@@ -39,15 +38,16 @@ while not gameEnd:
             print("It's your turn player "+playTurn+", which grid you want to play?")
             koordinat = input("")
             jalan(board, koordinat, playTurn, arrayLegalMovesO, arrayLegalMovesX)
-            makanPiece(board, playTurn, koordinat)
             updateArrayLegalMove(board, arrayLegalMovesO, arrayLegalMovesX)
         else:
             print("Sorry my friend, there is no legal move for you this turn")
     
-    cekGameEnd(arrayLegalMovesO, arrayLegalMovesX)
+    gameEnd = cekGameEnd(arrayLegalMovesO, arrayLegalMovesX)
     print("eval state " + playTurn + " = " + str(evalState(playTurn, board, arrayLegalMovesO, arrayLegalMovesX)))
     playTurn = switchPlay(playTurn)
 
     # For checking purpose only. Delete if the project is finished.
     print('arrayLegalMovesO : ',arrayLegalMovesO)
     print('arrayLegalMovesX : ',arrayLegalMovesX)
+
+showWin()
