@@ -5,29 +5,44 @@ import copy
 
 def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentNode):
     if(depth == 0):
-        print("sampai di daun")
+        print("")
         # return
     else:
         if(playTurn == 'x'):    
             array = arrayLegalMovesX
         else:
             array = arrayLegalMovesO
-        for i in array:
+        # Jika arrayLegalMoves ada isinya
+        if array:
+            for i in array:
+                initialBoard = copy.deepcopy(board)
+                # parent = copy.deepcopy(parentNode)
+                stringJalan = str(i[0])+","+str(i[1])
+                copyBoard = copy.deepcopy(jalan(initialBoard, stringJalan, playTurn, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX)))
+                if(playTurn == 'x'):
+                    playTurnCheck = 'o'
+                elif(playTurn == 'o'):
+                    playTurnCheck = 'x'
+                tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
+                childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), parentNode)
+                
+                makeTree(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, childNode)
+        else:
             initialBoard = copy.deepcopy(board)
-            parent = copy.deepcopy(parentNode)
-            print(depth)
-            stringJalan = str(i[0])+","+str(i[1])
-            print(stringJalan)
-            copyBoard = copy.deepcopy(jalan(initialBoard, stringJalan, playTurn, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX)))
+            # parent = copy.deepcopy(parentNode)
+            copyBoard = copy.deepcopy(initialBoard)
             if(playTurn == 'x'):
                 playTurnCheck = 'o'
             elif(playTurn == 'o'):
                 playTurnCheck = 'x'
-            tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
-            childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), parent)
-            
+            tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(
+                arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
+            childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), parentNode)
+
             makeTree(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, childNode)
-            
+        
+# def evalTree(parentNode, arrayLegalMovesO, arrayLegalMovesX, playTurn, board):
+
 
 # def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
 
@@ -46,4 +61,5 @@ depth = 2
 parentNode = Node((board, arrayLegalMovesO, arrayLegalMovesX))
 # print(RenderTree(parentNode))
 makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentNode)
-print(RenderTree(parentNode))
+for i in range (0,len(parentNode.children)):
+    print(parentNode.children[i])
