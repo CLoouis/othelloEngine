@@ -9,6 +9,7 @@ def jalan(board, posisi, playTurn, arrayLegalMovesO, arrayLegalMovesX):
         # Remove koordinatJalan dari arrayLegalMoves
         removeKoordinatDariArrayLegal(int(koordinatJalan[0]),int(koordinatJalan[1]),arrayLegalMovesO,arrayLegalMovesX)
         makanPiece(board, playTurn, posisi)
+        return board
     else:
         # Koordinat tidak legal
         print("I'm sorry, but that move is invalid my friend. Please input another one. Which grid you want to play?")
