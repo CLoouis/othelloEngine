@@ -3,6 +3,7 @@ from evaluation import *
 from legal import *
 from game import *
 from randombot import *
+from execute import *
 import random
 
 board = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
@@ -32,37 +33,44 @@ def main():
     arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
     gameEnd = False
     # playTurn = 'o'
-    print("Anda ingin bermain sebagai o atau x ")
-    player = input("> ")
+    print("Siapakah yang akan bermain sebagai hitam?")
+    print("[1] Player")
+    print("[2] Random Bot")
+    print("[3] Minimax Bot")
+    playerO = input("> ")
+    print("Siapakah yang akan bermain sebagai putih?")
+    print("[1] Player")
+    print("[2] Random Bot")
+    print("[3] Minimax Bot")
+    playerX = input("> ")
 
     print("GAME BEGINS! Input your command by using 'row,column' of the grid you want to play")
     # For checking purpose only. Delete if the project is finished.
     print('arrayLegalMovesO : ',arrayLegalMovesO)
     print('arrayLegalMovesX : ',arrayLegalMovesX)
+    depth = 1
+    showBoard(board)
+    showScore(board)
     while not gameEnd:
-        showBoard(board)
-        showScore(board)
-        if(playTurn == 'o' and playTurn == player):
+        # showBoard(board)
+        # showScore(board)
+        if(playTurn == 'o'):
             if(arrayLegalMovesO):
-                print("It's your turn player "+playTurn+", which grid you want to play?")
-                koordinat = input("")
+                koordinat = execute(playerO, board, arrayLegalMovesO, 
+                            arrayLegalMovesX, playTurn, depth)
                 jalan(board, koordinat, playTurn, arrayLegalMovesO, arrayLegalMovesX)
                 updateArrayLegalMove(board, arrayLegalMovesO, arrayLegalMovesX)
             else:
                 print("Sorry my friend, there is no legal move for you this turn")
-        elif(playTurn == 'x' and playTurn == player):
+        elif(playTurn == 'x'):
             if(arrayLegalMovesX):
-                print("It's your turn player "+playTurn+", which grid you want to play?")
-                koordinat = input("")
+                koordinat = execute(playerX, board, arrayLegalMovesO,
+                            arrayLegalMovesX, playTurn, depth)
                 jalan(board, koordinat, playTurn, arrayLegalMovesO, arrayLegalMovesX)
                 updateArrayLegalMove(board, arrayLegalMovesO, arrayLegalMovesX)
             else:
                 print("Sorry my friend, there is no legal move for you this turn")
-        elif(playTurn != player):
-            tupleMove = randomMove(arrayLegalMovesO, arrayLegalMovesX, playTurn)
-            koordinat = str(tupleMove[0]) + ',' + str(tupleMove[1])
-            jalan(board, koordinat, playTurn, arrayLegalMovesO, arrayLegalMovesX)
-            updateArrayLegalMove(board, arrayLegalMovesO, arrayLegalMovesX)
+        
         
         gameEnd = cekGameEnd(arrayLegalMovesO, arrayLegalMovesX)
         print("eval state " + playTurn + " = " + str(evalState(playTurn, board, arrayLegalMovesO, arrayLegalMovesX)))
@@ -71,6 +79,8 @@ def main():
         # For checking purpose only. Delete if the project is finished.
         print('arrayLegalMovesO : ',arrayLegalMovesO)
         print('arrayLegalMovesX : ',arrayLegalMovesX)
+        showBoard(board)
+        showScore(board)
     showWin()
 
 main()
