@@ -1,3 +1,7 @@
+global countO,countX
+countO = 0
+countX = 0
+
 def showBoard(board):
     """Menampilkan papan permainan saat ini"""
 
@@ -16,7 +20,9 @@ def isGridKosong(board, baris,kolom):
 
     return (board[baris][kolom] == ' ')
 
-def countScore(board):
+def showScore(board):
+    global countO,countX
+
     countO = 0
     countX = 0
 
@@ -26,6 +32,17 @@ def countScore(board):
                 countO += 1
             elif (board[i][j] == 'x'):
                 countX += 1
-    
+                
     print("Number of O = ", countO)
     print("Number of X = ", countX)
+
+def showWin():
+    global countO, countX
+    if(countO > countX):
+        print("Well played O !!")
+    elif(countX > countO):
+        print("Well played X !!")
+    else:
+        print("It's a draw !")
+
+    
