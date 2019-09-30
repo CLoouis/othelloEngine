@@ -38,6 +38,7 @@ def updateArrayLegalMove(board, arrayLegalMovesO, arrayLegalMovesX):
                 addArrayLegal('o',i,j,arrayLegalMovesO,arrayLegalMovesX)
             if isGridLegal(board,'x',i,j):
                 addArrayLegal('x',i,j, arrayLegalMovesO, arrayLegalMovesX)
+    return((arrayLegalMovesO,arrayLegalMovesX))
 
 def removeKoordinatDariArrayLegal(baris,kolom, arrayLegalMovesO, arrayLegalMovesX):
     """Jika playTurn o remove (baris,kolom) dari arrayLegalMovesX

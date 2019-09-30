@@ -15,6 +15,7 @@ def jalan(board, posisi, playTurn, arrayLegalMovesO, arrayLegalMovesX):
         print("I'm sorry, but that move is invalid my friend. Please input another one. Which grid you want to play?")
         koordinat = input("")
         jalan(board,koordinat,playTurn, arrayLegalMovesO, arrayLegalMovesX)
+        return board
 
 def switchPlay(playTurn):
     """Mengganti playTurn dari o menjadi x atau dari x menjadi o
