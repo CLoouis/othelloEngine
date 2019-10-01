@@ -10,7 +10,7 @@ def evalCoinParityEvaluation(playTurn, board):
             if (board[i][j] == playTurn):
                 numberOfPlayTurnPiece += 20
             elif (board[i][j] != ' ') :
-                numberOfEnemiesPiece += 30
+                numberOfEnemiesPiece += 20
     
     return numberOfPlayTurnPiece - numberOfEnemiesPiece
 

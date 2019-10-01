@@ -4,35 +4,40 @@ from legal import *
 from game import *
 from randombot import *
 from execute import *
+from gui import *
 import random
 
-board = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
+# board = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
 
-board[4][4] = 'o'
-board[4][5] = 'x'
-board[5][4] = 'x'
-board[5][5] = 'o'
+# board[4][4] = 'x'
+# board[4][5] = 'o'
+# board[5][4] = 'o'
+# board[5][5] = 'x'
 
-global arrayLegalMovesO, arrayLegalMovesX, playTurn, koordinat
-arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
-arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
-gameEnd = False
-playTurn = 'o'
+# global arrayLegalMovesO, arrayLegalMovesX, playTurn, koordinat
+# arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
+# arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
+# gameEnd = False
+# playTurn = 'o'
 
 # MAIN
 def main():
+    root = Tk()
+    screen = Canvas(root, width=500, height=600, bg="#468A53")
+    screen.pack()
+    drawGrid(screen)
+    
     board = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
 
-    board[4][4] = 'o'
-    board[4][5] = 'x'
-    board[5][4] = 'x'
-    board[5][5] = 'o'
+    board[4][4] = 'x'
+    board[4][5] = 'o'
+    board[5][4] = 'o'
+    board[5][5] = 'x'
 
-    global arrayLegalMovesO, arrayLegalMovesX, playTurn, koordinat
     arrayLegalMovesO = [(5,3),(6,4),(3,5),(4,6)]
     arrayLegalMovesX = [(4,3),(3,4),(6,5),(5,6)]
     gameEnd = False
-    # playTurn = 'o'
+    playTurn = 'o'
     print("Siapakah yang akan bermain sebagai hitam?")
     print("[1] Player")
     print("[2] Random Bot")
@@ -50,7 +55,8 @@ def main():
     print('arrayLegalMovesX : ',arrayLegalMovesX)
     depth = 1
     showBoard(board)
-    showScore(board)
+    drawBoard(board, screen)
+    # showScore(board)
     while not gameEnd:
         # showBoard(board)
         # showScore(board)
@@ -80,7 +86,12 @@ def main():
         print('arrayLegalMovesO : ',arrayLegalMovesO)
         print('arrayLegalMovesX : ',arrayLegalMovesX)
         showBoard(board)
-        showScore(board)
-    showWin()
+        # showScore(board)
+        root.update()
+        drawBoard(board, screen)
+        drawScoreBoard(board, screen)
 
+
+    # showWin()
+    root.mainloop()
 main()
