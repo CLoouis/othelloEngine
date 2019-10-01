@@ -2,7 +2,7 @@ import randombot
 import minimaxBot
 import re
 import legal
-# import minimaxBot
+import minimaxBotAlt
 
 def execute(whoami, board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
     if (whoami == "1"):
@@ -33,8 +33,7 @@ def execute(whoami, board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
         return str(tupleMove[0]) + ',' + str(tupleMove[1])
     elif (whoami == "3"):
         # minimax bot
-        return 1,1
-        # return minimaxBot.minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth)
+        return minimaxBotAlt.minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, 4, 0)
     elif (whoami == "4"):
         return minimaxBot.minimaxBot(board,arrayLegalMovesO,arrayLegalMovesX,playTurn,3)
     else:
