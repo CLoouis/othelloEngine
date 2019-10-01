@@ -3,6 +3,24 @@ from evaluation import *
 from anytree import *
 import copy
 
+
+def chooseMaxNode(node):
+    """Mengembalikan tuple (langkah,nilai eval) dari sebuah node dan siblings nya"""
+    tempReturnNode = node
+    for x in node.siblings:
+        if(tempReturnNode.eval < x.eval):
+            tempReturnNode = x
+    return tempReturnNode
+
+def chooseMinNode(node):
+    """Mengembalikan tuple (langkah,nilai eval) dari sebuah node dan siblings nya"""
+    tempReturnNode = node
+    for x in node.siblings:
+        if(tempReturnNode.eval > x.eval):
+            tempReturnNode = x
+    return tempReturnNode
+
+# TODO makeTree return tuple. Proses saat kembali ke depth sebelumnya
 def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentNode):
     """Node pohon menggunakan AnyNode. Format = (id(board,legalO,legalX),nilaiEval,parent)"""
     # Basis
@@ -28,6 +46,7 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
             tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
             evalValue = evalState(playTurn, copyBoard, tupleArrayLegal[0], tupleArrayLegal[1])
             childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), parent=parentNode)
+            return((0,0),evalValue)
     elif(depth > 1):
         if(playTurn == 'x'):    
             array = arrayLegalMovesX
@@ -45,6 +64,8 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
                 elif(playTurn == 'o'):
                     playTurnCheck = 'x'
                 tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
+
+                # TODO simpan tuple langkah yang diambil di node
                 childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=0, parent=parentNode)
                 
                 makeTree(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, childNode)
@@ -56,8 +77,9 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
                 playTurnCheck = 'o'
             elif(playTurn == 'o'):
                 playTurnCheck = 'x'
-            tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(
-                arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
+            tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
+
+            # TODO simpan tuple langkah yang diambil di node
             childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), parent=parentNode)
 
             makeTree(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, childNode)
@@ -98,11 +120,11 @@ print(test.depth)
 # for i in range (0,len(parentNode.children)):
 #     print(parentNode.children[i])
 
-# a = AnyNode(id = 'e')
-# b = AnyNode(id = 'f',parent=a)
-# c = AnyNode(id = 'g',parent=a)
-# d = AnyNode(id = 'h',parent=b)
+a = AnyNode(id = 'e')
+b = AnyNode(id = 'f',parent=a)
+c = AnyNode(id = 'g',parent=a)
+d = AnyNode(id = 'h',parent=b)
 
 
-# print(a.children)
+print(len(b.siblings))
 # print(e)
