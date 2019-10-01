@@ -2,7 +2,7 @@ from game import *
 from evaluation import *
 from anytree import *
 import copy
-
+import math
 
 def chooseMaxNode(node):
     """Mengembalikan tuple (langkah,nilai eval) dari sebuah node dan siblings nya"""
@@ -23,8 +23,10 @@ def chooseMinNode(node):
 # TODO makeTree return tuple. Proses saat kembali ke depth sebelumnya
 
 
-def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentNode):
+def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentNode, alphaValue, betaValue):
     """Node pohon menggunakan AnyNode. Format = (id(board,legalO,legalX),nilaiEval,parent)"""
+    alpha = alphaValue
+    beta = betaValue
     # Basis
     if(depth == 1):
         if(playTurn == 'x'):    
@@ -40,27 +42,58 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
                 copyBoard = copy.deepcopy(jalan(initialBoard, stringJalan, playTurn, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX)))
                 tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
                 evalValue = evalState(playTurn, copyBoard, tupleArrayLegal[0], tupleArrayLegal[1])
-                childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=evalValue, parent=parentNode, langkah = i) 
-            depthNode = parentNode.depth
-            if (depthNode % 2 == 1):
-                hasil = chooseMinNode(childNode)
-            else:
-                hasil = chooseMaxNode(childNode)
-            parentNode.eval = hasil[1]
+                # childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=evalValue, parent=parentNode, langkah = i)
+                if (parentNode.depth % 2 == 1):
+                    # bikin node, evalnode, 
+                    betaValue = min(betaValue, evalValue)
+                    parentNode.beta = betaValue
+                    parentNode.alpha = alphaValue
+                    
+                else:
+                    alphaValue = max(alphaValue, evalValue)
+                    parentNode.alpha = alphaValue
+                    parentNode.beta = betaValue
+                if(parentNode.beta <= parentNode.alpha):
+                    break
+                #     childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), alpha=maxValue, beta=betaValue, eval=evalValue, parent=parentNode, langkah = i)
+                # childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), alpha=maxValue, parent=parentNode, langkah = i)
+            #  if(betaValue <= alphaValue):
+            #      break
+            # epthNode = parentNode.depth
+            # f (depthNode % 2 == 1):
+            #    hasil = chooseMinNode(childNode)
+            # lse:
+            #    hasil = chooseMaxNode(childNode)
+            # arentNode.eval = hasil[1]
             return parentNode            
         else:
             initialBoard = copy.deepcopy(board)
-            # parent = copy.deepcopy(parentNode)
+            parent = copy.deepcopy(parentNode)
             copyBoard = copy.deepcopy(initialBoard)
             tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
             evalValue = evalState(playTurn, copyBoard, tupleArrayLegal[0], tupleArrayLegal[1])
-            childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=evalValue, parent=parentNode, langkah = (0,0))
-            depthNode = parentNode.depth
-            if (depthNode % 2 == 1):
-                hasil = chooseMinNode(childNode)
+            if (parentNode.depth % 2 == 1):
+                # bikin node, evalnode, 
+                betaValue = min(betaValue, evalValue)
+                parentNode.beta = betaValue
+                parentNode.alpha = alphaValue
+                
             else:
-                hasil = chooseMaxNode(childNode)
-            parentNode.eval = hasil[1]
+                alphaValue = max(alphaValue, evalValue)
+                parentNode.alpha = alphaValue
+                parentNode.beta = betaValue
+            # if ((parentNode.depth+1) % 2 == 1):
+            #     childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), alpha=-math.inf, beta=evalValue, eval=evalValue, parent=parentNode, langkah = i)
+            # else:
+            #     childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), alpha=evalValue, beta=math.inf, eval=evalValue, parent=parentNode, langkah = i)
+            # depthNode = parentNode.depth
+            # if (depthNode % 2 == 1):
+            #     hasil = chooseMinNode(childNode)
+            # else:
+            #     hasil = chooseMaxNode(childNode)
+            # parentNode.eval = hasil[1]
+            # parentNode.alpha = alphaValue
+            # parentNode.beta = betaValue
             return parentNode
     elif(depth > 1):
         if(playTurn == 'x'):    
@@ -79,7 +112,7 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
                 elif(playTurn == 'o'):
                     playTurnCheck = 'x'
                 tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
-                childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=0, parent=parentNode, langkah = i)
+                childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), alpha=-math.inf, beta=math.inf, eval=0, parent=parentNode, langkah = i)
                 makeTree(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, childNode)     
             if (parentNode.depth % 2 == 1):
                 hasil = chooseMinNode(childNode)
@@ -96,7 +129,7 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
             elif(playTurn == 'o'):
                 playTurnCheck = 'x'
             tupleArrayLegal = updateArrayLegalMove(copyBoard, copy.deepcopy(arrayLegalMovesO), copy.deepcopy(arrayLegalMovesX))
-            childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=0, parent=parentNode, langkah = (0,0))
+            childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), alpha=-math.inf, beta=math.inf, eval=0, parent=parentNode, langkah = (0,0))
 
             makeTree(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, childNode)
 
@@ -109,7 +142,7 @@ def makeTree(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, parentN
         
 
 def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
-    parentNode = AnyNode(id=(board, arrayLegalMovesO, arrayLegalMovesX), eval=0, langkah=(0, 0))
+    parentNode = AnyNode(id=(board, arrayLegalMovesO, arrayLegalMovesX), alpha=-math.inf, beta=math.inf, eval=0, langkah=(0, 0))
     hasil = makeTree(board,arrayLegalMovesO,arrayLegalMovesX,playTurn,depth,parentNode)
     for i in hasil.children:
         if(i.eval == parentNode.eval):
@@ -142,4 +175,4 @@ def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
 # d = AnyNode(id = 'h',parent=b)
 
 # print(a.depth)
-# print(e)
+# print(math.inf * -1)
