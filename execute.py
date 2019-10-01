@@ -1,4 +1,5 @@
 import randombot
+import minimaxBot
 import re
 import legal
 # import minimaxBot
@@ -34,5 +35,7 @@ def execute(whoami, board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
         # minimax bot
         return 1,1
         # return minimaxBot.minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth)
+    elif (whoami == "4"):
+        return minimaxBot.minimaxBot(board,arrayLegalMovesO,arrayLegalMovesX,playTurn,3)
     else:
         return "error"
