@@ -3,8 +3,10 @@ from evaluation import *
 import copy
 
 # TODO minimaxBot return tuple. Proses saat kembali ke depth sebelumnya
-def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, height):
+def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, height, alpha, beta):
     """Node pohon menggunakan AnyNode. Format = (id(board,legalO,legalX),nilaiEval,parent)"""
+    alphalocal = copy.deepcopy(alpha)
+    betalocal = copy.deepcopy(beta)
     # Basis
     if(depth == 0):
         return evalState(playTurn, board, arrayLegalMovesO, arrayLegalMovesX)
@@ -31,9 +33,15 @@ def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, heigh
 
                 # TODO simpan tuple langkah yang diambil di node
                 # childNode = AnyNode(id=(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=0, parent=parentNode)
-                
-                hasil.append([(str(i[0]) + "," + str(i[1])),minimaxBot(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, heightcopy)])
-        
+                value = minimaxBot(
+                    copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, heightcopy, alphalocal, betalocal)
+                hasil.append([(str(i[0]) + "," + str(i[1])),value])
+                if (heightcopy % 2 == 1):  # ambil max
+                    alphalocal = max(alphalocal, value)
+                else:  # ambil min
+                    betalocal = min(betalocal, value)
+                if (alphalocal >= betalocal):
+                    break
         else:
             hasil = []
             initialBoard = copy.deepcopy(board)
@@ -48,7 +56,8 @@ def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, heigh
             # TODO simpan tuple langkah yang diambil di node
             # childNode = Node((copyBoard, tupleArrayLegal[0], tupleArrayLegal[1]), eval=0, parent=parentNode)
 
-            hasil.append(["0,0",minimaxBot(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1], playTurnCheck, depth-1, heightcopy)])
+            hasil.append(["0,0", minimaxBot(copyBoard, tupleArrayLegal[0], tupleArrayLegal[1],
+                                            playTurnCheck, depth-1, heightcopy, alphalocal, betalocal)])
 
         if (heightcopy != 1):
             if (heightcopy % 2 == 1): # ambil max
@@ -56,14 +65,14 @@ def minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth, heigh
                 for x in hasil:
                     if (x[1] > temp):
                         temp = x[1]
-                return hasil
+                return temp
 
             else: # ambil min
                 temp = hasil[0][1]
                 for x in hasil:
                     if (x[1] < temp):
                         temp = x[1]
-                return hasil
+                return temp
         else:
             temp = hasil[0][1]
             woop = hasil[0][0]

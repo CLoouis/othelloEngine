@@ -3,6 +3,7 @@ import minimaxBot
 import re
 import legal
 import minimaxBotAlt
+import math
 
 def execute(whoami, board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
     if (whoami == "1"):
@@ -33,8 +34,8 @@ def execute(whoami, board, arrayLegalMovesO, arrayLegalMovesX, playTurn, depth):
         return str(tupleMove[0]) + ',' + str(tupleMove[1])
     elif (whoami == "3"):
         # minimax bot
-        return minimaxBotAlt.minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, 4, 0)
+        return minimaxBotAlt.minimaxBot(board, arrayLegalMovesO, arrayLegalMovesX, playTurn, 6, 0, -math.inf, math.inf)
     elif (whoami == "4"):
-        return minimaxBot.minimaxBot(board,arrayLegalMovesO,arrayLegalMovesX,playTurn,3)
+        return minimaxBot.minimaxBot(board,arrayLegalMovesO,arrayLegalMovesX,playTurn,4)
     else:
         return "error"
